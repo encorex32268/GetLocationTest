@@ -44,5 +44,16 @@
                     }, Looper.getMainLooper())
             }
         }
+# onRequestPermissionsResult
+
+	 override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    	) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this) // last parameter (...,this)
+
+    }
 
 	
