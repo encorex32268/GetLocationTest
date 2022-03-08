@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
     @SuppressLint("MissingPermission")
     private fun showLocation() {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-            it?:run{
+            if (it.latitude == null){
+                locationTextView.text = "Null"
                 val request = LocationRequest.create().apply {
                     interval = 5000
                     fastestInterval = 3000
@@ -53,6 +54,9 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
                             fusedLocationProviderClient.removeLocationUpdates(this)
                         }
                     }, Looper.getMainLooper())
+            }else{
+                locationTextView.text = "${it.latitude}, ${it.longitude}"
+
             }
         }
     }
@@ -90,6 +94,7 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults)
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this)
+
     }
 }
